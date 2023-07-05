@@ -1,6 +1,5 @@
 import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
-import { NextResponse } from "next/server";
 
 export const GET = async (req, { params }) => {
   try {
@@ -10,8 +9,10 @@ export const GET = async (req, { params }) => {
       "creator"
     );
 
-    return NextResponse.json(prompts, { status: 200 });
+    return new Response(JSON.stringify(prompts), {
+      status: 200,
+    });
   } catch (error) {
-    return NextResponse.error(error, { status: 500 });
+    return new Response(error.message, { status: 500 });
   }
 };

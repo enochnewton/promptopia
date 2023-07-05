@@ -1,6 +1,5 @@
 import Prompt from "@models/prompt";
 import { connectToDB } from "@utils/database";
-import { NextResponse } from "next/server";
 
 // GET one prompt
 export const GET = async (req, { params }) => {
@@ -11,9 +10,9 @@ export const GET = async (req, { params }) => {
 
     if (!prompt) return NextResponse.error("Prompt not found", { status: 404 });
 
-    return NextResponse.json(prompt, { status: 200 });
+    return new Response(JSON.stringify(prompt), { status: 200 });
   } catch (error) {
-    return NextResponse.error(error.message, { status: 500 });
+    return new Response(error.message, { status: 500 });
   }
 };
 
@@ -34,11 +33,9 @@ export const PATCH = async (req, { params }) => {
 
     await existingPrompt.save();
 
-    return NextResponse.json(existingPrompt, { status: 200 });
+    return new Response(JSON.stringify(existingPrompt), { status: 200 });
   } catch (error) {
-    return NextResponse.error("failed to update the prompt in the backend", {
-      status: 500,
-    });
+    return new Response(error.message, { status: 500 });
   }
 };
 
@@ -49,8 +46,10 @@ export const DELETE = async (req, { params }) => {
 
     await Prompt.findByIdAndDelete(params.id);
 
-    return NextResponse.json({ message: "Prompt deleted" }, { status: 200 });
+    return new Response(JSON.stringify({ message: "Prompt deleted" }), {
+      status: 200,
+    });
   } catch (error) {
-    return NextResponse.error("failed to delete the prompt", { status: 500 });
+    return new Response(error.message, { status: 500 });
   }
 };
