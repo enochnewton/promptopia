@@ -12,6 +12,6 @@ export const GET = async (req, { params }) => {
 
     return NextResponse.json(prompts, { status: 200 });
   } catch (error) {
-    return NextResponse.error(error.message, { status: 500 });
+    return NextResponse.error(error, { status: 500 });
   }
 };
