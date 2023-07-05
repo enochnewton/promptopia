@@ -46,8 +46,6 @@ const updatePrompt = () => {
         }),
       });
 
-      console.log(post);
-
       if (response.ok) {
         router.push("/");
       }
